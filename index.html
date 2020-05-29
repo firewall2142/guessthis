@@ -2,14 +2,14 @@
 <html>
 <head>
 	<title>Guess this</title>
-	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<!-- CSS only -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
-	<!-- Optional theme -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-
-	<!-- Latest compiled and minified JavaScript -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<!-- JS, Popper.js, and jQuery -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+	<script src="/socket.io/socket.io.js"></script>
 	<style>
 		#mainCanvas {
 			border: 2px solid;
@@ -18,26 +18,61 @@
 		#messages { list-style-type: none; margin: 0; padding: 0; }
 		#messages li {padding: 5px 10px; }
 		#messages li:nth-child(odd) {background: #eee; }
-		form input { border: 0; padding: 10px; width: 90%; margin-right: 0.5%; }
-		form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+		form input { border: 0; padding: 10px; width: 70%; margin-right: 0.5%; }
+		form button { width: 20%; background: rgb(130, 224, 255); border: none; padding: 10px; }
 		
 		body {
 			font: 13px Helvetica, Arial;
 		}
 	</style>
-	<script src="canvas.js"></script>
+	<script src="main.js"></script>
+	<script>
+		const socket = io();
+		socket.on('username', (usr) => {
+			document.getElementById('username').innerText = usr;
+		});
+		$('#chatbox-form').submit((e) => {
+			e.preventDefault();
+			socket.emit('chat message', $('#m').val());
+			$('#m').val('');
+			return false;
+		});
+		$('#username-form').submit((e) => {
+			e.preventDefault();
+			socket.emit('username', $('#username-input').val());
+			$('#username-input').val('');
+			return false;
+		})
+	</script>
 </head>
 <body>
+	<div class="row">
+		<div class="col-sm-12 col-md-6"><h2>Hello, <span id="username">new User</span></h2></div>
+		<div class="col-sm-12 col-md-6">
+			<h2>
+				<form id="username-form" action="">
+					<input style="width: 60%" id="username-input" autocomplete="off" />
+					<button style="width: 30%" username-btn" ><h4>Change<h4></button>
+				</form>
+			</h2>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-6" id="game-message">
+			<h3>YOU need to draw: elephant</h3>
+		</div>
+		<div class="col-sm-6" id="points"><h3>Points: 123</h3></div>
+	</div>
 	<div class="row">
 		<div class="col-sm-6" id="canvasdiv"><canvas id="mainCanvas" width="640" height="480"></canvas></div>
 		<div class="col-sm-6" style="border: solid; border-color:dodgerblue">
 			<ul id="messages">
 				<li>Test1</li>
-				<li>asdljflkas sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl</li>
+				<li>asdljflkas sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9AshishSVrLvRYooPp2bWYgmgJQIXwl</li>
 			</ul>
-			<form action="">
+			<form id="chatbox-form" action="">
 				<input id="m" autocomplete="off" />
-				<button>Send</button>
+				<button id="send-message">Send</button>
 			</form>
 		</div>
 	</div>

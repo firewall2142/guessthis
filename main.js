@@ -1,3 +1,6 @@
+var disabled = true;
+
+
 window.addEventListener('load', function (){
     var canvas = document.getElementById('mainCanvas');
     ctx = canvas.getContext('2d');
@@ -10,18 +13,21 @@ window.addEventListener('load', function (){
     document.addEventListener('keypress', canvasClear);
 
     function canvasClear(e){
+        if(disabled) return;
         if(e.key=='C' || e.key=='c'){
             ctx.clearRect(0, 0, canvas.width, canvas.height);
         }
     }
 
     function setPosition(e){
+        if(disabled) return;
         let rect = canvas.getBoundingClientRect();
         pos.x = e.clientX - rect.left;
         pos.y = e.clientY - rect.top;
     }
 
     function draw(e){
+        if(disabled) return;
         if(e.buttons != 1) return;
         ctx.beginPath();
         ctx.lineWidth = 5;
@@ -32,5 +38,5 @@ window.addEventListener('load', function (){
         ctx.lineTo(pos.x, pos.y);
 
         ctx.stroke();
-    }
+    };
 });
