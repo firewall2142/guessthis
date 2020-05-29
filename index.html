@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Guess this</title>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<style>
+		#mainCanvas {
+			border: 2px solid;
+			border-color: black;
+		}
+		#messages { list-style-type: none; margin: 0; padding: 0; }
+		#messages li {padding: 5px 10px; }
+		#messages li:nth-child(odd) {background: #eee; }
+		form input { border: 0; padding: 10px; width: 90%; margin-right: 0.5%; }
+		form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+		
+		body {
+			font: 13px Helvetica, Arial;
+		}
+	</style>
+	<script src="canvas.js"></script>
+</head>
+<body>
+	<div class="row">
+		<div class="col-sm-6" id="canvasdiv"><canvas id="mainCanvas" width="640" height="480"></canvas></div>
+		<div class="col-sm-6" style="border: solid; border-color:dodgerblue">
+			<ul id="messages">
+				<li>Test1</li>
+				<li>asdljflkas sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl</li>
+			</ul>
+			<form action="">
+				<input id="m" autocomplete="off" />
+				<button>Send</button>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

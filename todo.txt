@@ -1,0 +1,2 @@
+* make the canvas resize to fill the canvasdiv
+* make chatbox scrollable
