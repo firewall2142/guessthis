@@ -26,24 +26,7 @@
 		}
 	</style>
 	<script src="main.js"></script>
-	<script>
-		const socket = io();
-		socket.on('username', (usr) => {
-			document.getElementById('username').innerText = usr;
-		});
-		$('#chatbox-form').submit((e) => {
-			e.preventDefault();
-			socket.emit('chat message', $('#m').val());
-			$('#m').val('');
-			return false;
-		});
-		$('#username-form').submit((e) => {
-			e.preventDefault();
-			socket.emit('username', $('#username-input').val());
-			$('#username-input').val('');
-			return false;
-		})
-	</script>
+
 </head>
 <body>
 	<div class="row">
@@ -52,16 +35,17 @@
 			<h2>
 				<form id="username-form" action="">
 					<input style="width: 60%" id="username-input" autocomplete="off" />
-					<button style="width: 30%" username-btn" ><h4>Change<h4></button>
+					<button style="width: 30%" id="username-btn" ><h4>Change<h4></button>
 				</form>
 			</h2>
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-sm-6" id="game-message">
-			<h3>YOU need to draw: elephant</h3>
+		<div class="col-sm-6">
+			<h3 id="game-message">No Response</h3>
 		</div>
-		<div class="col-sm-6" id="points"><h3>Points: 123</h3></div>
+		<div class="col-md-3" id="points"><h3>Points: 123</h3></div>
+		<div class="col-md-3" ><h3 id="timeleft">Time Left: 00:00</h3></div>
 	</div>
 	<div class="row">
 		<div class="col-sm-6" id="canvasdiv"><canvas id="mainCanvas" width="640" height="480"></canvas></div>
