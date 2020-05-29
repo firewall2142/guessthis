@@ -15,15 +15,22 @@
 			border: 2px solid;
 			border-color: black;
 		}
-		#messages { list-style-type: none; margin: 0; padding: 0; }
-		#messages li {padding: 5px 10px; }
-		#messages li:nth-child(odd) {background: #eee; }
 		form input { border: 0; padding: 10px; width: 70%; margin-right: 0.5%; }
 		form button { width: 20%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-		
-		body {
-			font: 13px Helvetica, Arial;
-		}
+		.chatbox ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+		.chatbox {height: 480px; }
+        .chatbox ul li { padding: 5px 10px;}
+		.chatbox .form {padding: 10px;}
+        .chatbox ul li:nth-child(odd) { background: #eee  }
+        .chatbox form input { width: 80%; }
+        .chatbox form button { align-self: right; width: 15%; border: none; background: darkcyan;}
+		.chatbox .messages { border: solid; height: 100%; overflow: scroll;}
+
+		body { font: 16px Helvetica, Arial; }
 	</style>
 	<script src="main.js"></script>
 
@@ -48,17 +55,21 @@
 		<div class="col-md-3" ><h3 id="timeleft">Time Left: 00:00</h3></div>
 	</div>
 	<div class="row">
-		<div class="col-sm-6" id="canvasdiv"><canvas id="mainCanvas" width="640" height="480"></canvas></div>
-		<div class="col-sm-6" style="border: solid; border-color:dodgerblue">
-			<ul id="messages">
-				<li>Test1</li>
-				<li>asdljflkas sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9AshishSVrLvRYooPp2bWYgmgJQIXwl</li>
-			</ul>
-			<form id="chatbox-form" action="">
-				<input id="m" autocomplete="off" />
-				<button id="send-message">Send</button>
-			</form>
+		<div class="col-lg-6" id="canvasdiv"><canvas id="mainCanvas" width="640" height="480"></canvas></div>
+		<div class="col-lg-6">
+			<div class="chatbox">
+				<div class="messages">
+					<!-- spammed with shitty test messages -->
+					<ul id="message-list">
+					</ul>
+				</div>
+				<form id="chatbox-form">
+					<input type="text" id="chat-message-input" />
+					<button>Send</button>
+				</form>
+			</div>
 		</div>
 	</div>
 </body>
 </html>
+

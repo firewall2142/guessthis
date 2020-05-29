@@ -48,6 +48,9 @@ window.addEventListener('load', function (){
     function updateTimeRemaining(time){
         document.getElementById('timeleft').innerText = `${Math.floor(time/60)}:${time%60}`;
     }
+    function appendChatMessage(msg){
+        document.getElementById('message-list').innerHTML += msg;
+    }
 
     socket.on('username', (usr) => {
         console.log('username:' + usr);
@@ -90,11 +93,19 @@ window.addEventListener('load', function (){
         img.src = canvasDataURL;
     });
 
+    socket.on('message', (msg) => {
+        console.log("Recieved msg : " + msg);
+        appendChatMessage(msg);
+    })
+
 
     $('#chatbox-form').submit((e) => {
         e.preventDefault();
-        socket.emit('chat message', $('#m').val());
-        $('#m').val('');
+        let msg = document.getElementById('chat-message-input').value;
+        msg = msg.trim();
+        if(! msg) return false;
+        socket.emit('message', msg);
+        document.getElementById('chat-message-input').value = "";
         return false;
     });
     $('#username-form').submit((e) => {

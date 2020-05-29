@@ -9,7 +9,7 @@ var PORT = 3000;
 var users = [];
 var DRAW_ITEMS = ["Ice Cream", "Sandwich", "House", "Cage", "Necklace", "Piano", "Mobile", "Headphones"];
 var drawer_index = 0;
-var GAME_DURATION = 10;
+var GAME_DURATION = 120;
 
 //for testing only!!
 app.use(express.static(__dirname));
@@ -29,7 +29,9 @@ var gameInterval; //gameinfo interval
 var drawItem;
 var drawer;
 var timeleft;
+var gameActive = false;
 function startGame(){
+    gameActive = true;
     if(users.length == 0) return;
     drawer_index += 1;
     drawer_index %= users.length;
@@ -52,6 +54,7 @@ function updateInfo(){
 }
 
 function endGame(){
+    gameActive = false;
     console.log("=====\nGAME ENDED")
 
     //show end game page
@@ -91,6 +94,21 @@ io.on('connection', (socket) => {
         }
     });
 
+    socket.on('message', (msg) => {
+        console.log("Message:\t" + socket.id + "\t" + sock2user.get(socket.id) + `\t${msg}`);
+        msg = escapeHtml(msg);
+        msg = msg.replace(/^\s+|\s+$/g, ''); //remove leading and trailing whitespace
+        msg = msg.replace(/\n+/g, '');
+        if(gameActive && msg.toLowerCase() == drawItem.toLowerCase()){
+            socket.broadcast.emit('message', 
+            `<li><span class="correct"><span class="user">${sock2user.get(socket.id)}</span> is right!</span></li>`);
+            socket.emit('message', 
+            '<li><span class="correct"><span class="user yourself">YOU</span> are right!</span></li>');
+        } else {
+            io.emit('message', `<li>${msg}</li>`);
+        }
+    });
+
     console.log('num of users  :\t', users.length);
     console.log('user connected:\t' + socket.id + '\t' + username);
     socket.emit('username', username);
@@ -102,3 +120,11 @@ io.on('connection', (socket) => {
 
 });
 
+function escapeHtml(unsafe) {
+    return unsafe
+         .replace(/&/g, "&amp;")
+         .replace(/</g, "&lt;")
+         .replace(/>/g, "&gt;")
+         .replace(/"/g, "&quot;")
+         .replace(/'/g, "&#039;");
+ }
