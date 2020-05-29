@@ -1,9 +1,14 @@
 var canvasDisabled = true;
+var lastblob;
 const socket = io();
 
 window.addEventListener('load', function (){
     var canvas = document.getElementById('mainCanvas');
     ctx = canvas.getContext('2d');
+    canvas.width = 640;
+    canvas.height = 480;
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
 
     var pos = {x: 0, y: 0};
 
@@ -13,6 +18,7 @@ window.addEventListener('load', function (){
     document.addEventListener('keypress', canvasClear);
 
     function canvasClear(e){
+        canvas = document.getElementById('mainCanvas');
         if(canvasDisabled) return;
         if(e.key=='C' || e.key=='c'){
             ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -20,17 +26,27 @@ window.addEventListener('load', function (){
     }
 
     function setPosition(e){
-        if(canvasDisabled) return;
-        let rect = canvas.getBoundingClientRect();
-        pos.x = e.clientX - rect.left;
-        pos.y = e.clientY - rect.top;
+        pos.x = e.offsetX * canvas.width / canvas.clientWidth | 0;
+        pos.y = e.offsetY * canvas.height / canvas.clientHeight | 0
     }
 
     function draw(e){
         if(canvasDisabled) return;
         if(e.buttons != 1) return;
         ctx.beginPath();
-        ctx.lineWidth = 5;
+        let parent = document.getElementById('canvasdiv');
+        var radius = (parent.clientWidth + parent.clientHeight) / 150;
+        ctx.lineWidth = radius;
+        ctx.lineCap = 'round';
+        ctx.strokeStyle = '#000';
+        ctx.moveTo(pos.x, pos.y);
+        setPosition(e);
+        ctx.lineTo(pos.x, pos.y);
+        ctx.stroke();
+
+/*
+        ctx.beginPath();
+        ctx.lineWidth = 1;
         ctx.lineCap = 'round';
         ctx.strokeStyle = '#000';
         ctx.moveTo(pos.x, pos.y);
@@ -38,7 +54,9 @@ window.addEventListener('load', function (){
         ctx.lineTo(pos.x, pos.y);
 
         ctx.stroke();
-        socket.emit('update canvas', canvas.toDataURL());
+*/  
+        lastblob = canvas.toDataURL();
+        socket.emit('update canvas', lastblob);
     };
 
 
@@ -58,6 +76,7 @@ window.addEventListener('load', function (){
     });
 
     socket.on('game start', (gameinfo) => {
+        canvasDisabled = true;
         console.log('game start');
         /*
         1. clear canvas
@@ -75,8 +94,17 @@ window.addEventListener('load', function (){
         //console.log('game info' + JSON.stringify(gameinfo));
         updateTimeRemaining(gameinfo['timeRemaining']);
         
-        if(gameinfo['drawer'] != document.getElementById('username').innerText)
+        if(gameinfo.drawer == "") {
+            updateMessage('<span class="special">Game finished...</span>');
+            canvasDisabled = true;
+        } else if(gameinfo.drawer != document.getElementById('username').innerText ) {
             updateMessage(gameinfo['drawer'] + ' is drawing');
+            canvasDisabled = true;
+        } else {
+            canvasDisabled = false;
+        }
+        
+
     });
 
     socket.on('drawer', (item) => {
@@ -96,6 +124,12 @@ window.addEventListener('load', function (){
     socket.on('message', (msg) => {
         console.log("Recieved msg : " + msg);
         appendChatMessage(msg);
+    });
+
+    socket.on('points', (ptsdat) => {
+        console.log("Received points: " + JSON.stringify(ptsdat));
+        document.getElementById('points').innerText = `Points: ${ptsdat.game}`;
+        appendChatMessage(`<li><span="${(ptsdat.round > 0)?'correct':'special'}"/>You've earned ${ptsdat.round} points this round</span></li>`);
     })
 
 

@@ -11,10 +11,11 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 	<script src="/socket.io/socket.io.js"></script>
 	<style>
-		#mainCanvas {
-			border: 2px solid;
-			border-color: black;
-		}
+		tr:nth-child(even) {background-color: #f2f2f2;}
+		th {background-color: #4CAF50; padding: 5px;}
+		td {padding: 5px;}
+		table {border-collapse: collapse; }
+		body { font: 16px Helvetica, Arial;}
 		form input { border: 0; padding: 10px; width: 70%; margin-right: 0.5%; }
 		form button { width: 20%; background: rgb(130, 224, 255); border: none; padding: 10px; }
 		.chatbox ul {
@@ -29,11 +30,16 @@
         .chatbox form input { width: 80%; }
         .chatbox form button { align-self: right; width: 15%; border: none; background: darkcyan;}
 		.chatbox .messages { border: solid; height: 100%; overflow: scroll;}
-
-		body { font: 16px Helvetica, Arial; }
+		.correct { color: green; }
+		.user {font-weight: bold; color: black;}
+		.special {font-style: italic; color: #444;}
+		.outlined {border: 1px solid gray;}
+		#mainCanvas {
+			border: 2px solid black;
+			width: 100%;
+		}
 	</style>
 	<script src="main.js"></script>
-
 </head>
 <body>
 	<div class="row">
@@ -55,11 +61,10 @@
 		<div class="col-md-3" ><h3 id="timeleft">Time Left: 00:00</h3></div>
 	</div>
 	<div class="row">
-		<div class="col-lg-6" id="canvasdiv"><canvas id="mainCanvas" width="640" height="480"></canvas></div>
+		<div class="col-lg-6" id="canvasdiv"><canvas id="mainCanvas"></canvas></div>
 		<div class="col-lg-6">
 			<div class="chatbox">
 				<div class="messages">
-					<!-- spammed with shitty test messages -->
 					<ul id="message-list">
 					</ul>
 				</div>
