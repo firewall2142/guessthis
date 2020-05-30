@@ -11,6 +11,7 @@ var DRAW_ITEMS = ["Icecream", "Sandwich", "House", "Cage", "Necklace", "Piano", 
 var drawer_index = 0;
 const GAME_DURATION = 120;
 const POINT_DIST = [5, 3, 2, 1];
+const DRAWER_DIST = [1, 3];
 
 
 //for testing only!!
@@ -71,6 +72,11 @@ function endGameScreen(){
     clearInterval(gameInterval);
     clearInterval(gameDrawerInterval);
 
+    let drawerpts = DRAWER_DIST[Math.min(DRAWER_DIST.length-1, correctGuess.length-1)];
+
+    if(correctGuess.length > 0){
+        sock2points.set(drawer, sock2points.get(drawer) + drawerpts);
+    }
 
     for (var i = correctGuess.length - 1; i >= 0; i--) {
         sock2points.set(correctGuess[i], sock2points.get(correctGuess[i]) + POINT_DIST[Math.min(i, POINT_DIST.length-1)]);
@@ -79,13 +85,12 @@ function endGameScreen(){
     var roundcmp = (a, b) => {
         let ind1 = correctGuess.indexOf(a);
         let ind2 = correctGuess.indexOf(b);
-        if(ind1 == ind2){
-            if(a < b) return 1;
-            else if(a > b) return -1;
-            else return 0;
-        } else {
-            return ind1 - ind2;
-        }
+        let ptsa = (ind1>=0)?POINT_DIST[Math.min(ind1, POINT_DIST.length-1)]:0;
+        let ptsb = (ind2>=0)?POINT_DIST[Math.min(ind2, POINT_DIST.length-1)]:0;
+        if(a == drawer) ptsa = drawerpts;
+        if(b == drawer) ptsb = drawerpts;
+        return ptsa - ptsb;
+        
     };
 
     var pointcmp = (a, b) => {
@@ -110,8 +115,13 @@ function endGameScreen(){
     io.emit('message', scoreTable);
     for (var i = users.length - 1; i >= 0; i--) {
         var x = correctGuess.indexOf(users[i]);
-        io.to(users[i]).emit('points', {game: sock2points.get(users[i]), 
-                                round: (x<0)?0:POINT_DIST[Math.min(x, POINT_DIST.length-1)]})
+        if(users[i] == drawer){
+            io.to(users[i]).emit('points', {game: sock2points.get(users[i]), 
+                round: drawerpts});
+        } else {
+            io.to(users[i]).emit('points', {game: sock2points.get(users[i]), 
+                                    round: (x<0)?0:POINT_DIST[Math.min(x, POINT_DIST.length-1)]})
+        }
     }
 
     timeleft = 10; //end game screen time
