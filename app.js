@@ -6,12 +6,20 @@ var rug = require('random-username-generator');
 
 var PORT = process.env.PORT || 3000;
 
+
+/*
+[Glue', 'Watch', 'Seat', 'Birthday', 'Hockey', 'Black hole', 'Hotel', 'Rope', 'Seat belt', 'Captain', 'Solar eclipse', 'Chandelier', 'Light', 'Space', 'Mask', 'Stethoscope', 'Mechanic', 'Stock', 'Dance', 'Tan', 'Deodorant', 'Thread', 'Tourist', 'Flat', 'Frame', 'Photo', 'WiFi', 'Moon', 'Zombie', 'Game', 'Pirate'];
+['Angel', 'Eyeball', 'Pizza', 'Angry', 'Fireworks', 'Pumpkin', 'Baby', 'Flower', 'Rainbow', 'Beard', 'Flying saucer', 'Recycle', 'Bible', 'Giraffe', 'Sand castle', 'Bikini', 'Glasses', 'Snowflake', 'Book', 'High heel', 'Stairs', 'Bucket', 'Ice cream cone', 'Starfish', 'Bumble bee', 'Igloo', 'Strawberry', 'Butterfly', 'Lady bug', 'Sun', 'Camera', 'Lamp', 'Tire', 'Cat', 'Lion', 'Toast', 'Church', 'Mailbox', 'Toothbrush', 'Crayon', 'Night', 'Toothpaste', 'Dolphin', 'Nose', 'Truck', 'Egg', 'Olympics', 'Volleyball', 'Eiffel Tower', 'Peanut']
+['Abraham Lincoln', 'Kiss', 'Pigtails', 'Brain', 'Kitten', 'Playground', 'Bubble bath', 'Kiwi', 'Pumpkin pie', 'Buckle', 'Lipstick', 'Raindrop', 'Bus', 'Lobster', 'Robot', 'Car accident', 'Lollipop', 'Sand castle', 'Castle', 'Magnet', 'Slipper', 'Chain saw', 'Megaphone', 'Snowball', 'Circus tent', 'Mermaid', 'Sprinkler', 'Computer', 'Minivan', 'Statue of Liberty', 'Crib', 'Mount Rushmore', 'Tadpole', 'Dragon', 'Music', 'Teepee', 'Dumbbell', 'North pole', 'Telescope', 'Eel', 'Nurse', 'Train', 'Ferris wheel', 'Owl', 'Tricycle', 'Flag', 'Pacifier', 'Tutu', 'Junk mail', 'Piano']
+
+*/
+
 var users = [];
-var DRAW_ITEMS = ["Icecream", "Sandwich", "House", "Cage", "Necklace", "Piano", "Mobile", "Headphones"];
+var DRAW_ITEMS = ["Icecream", "Sandwich", "House", "Cage", "Necklace", "Piano", "Mobile", "Headphones", 'Glue', 'Watch', 'Seat', 'Birthday', 'Hockey', 'Worm', 'Hotel', 'Rope', 'Spider', 'Captain', 'Dog', 'Chandelier', 'Light', 'Space', 'Mask', 'Stethoscope', 'Mechanic', 'Stock', 'Dance', 'Tan', 'Deodorant', 'Thread', 'Tourist', 'Flat', 'Frame', 'Photo', 'WiFi', 'Moon', 'Zombie', 'Game', 'Pirate'];
 var drawer_index = 0;
 const GAME_DURATION = 120;
 const POINT_DIST = [5, 3, 2, 1];
-const DRAWER_DIST = [1, 3];
+const DRAWER_DIST = [3];
 
 
 //for testing only!!
