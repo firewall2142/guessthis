@@ -14,14 +14,13 @@ window.addEventListener('load', function (){
     document.addEventListener('mousemove', draw);
     document.addEventListener('mousedown' , setPosition);
     document.addEventListener('mouseenter' , setPosition);
-    document.addEventListener('keypress', canvasClear);
+    document.getElementById('canvas-clear').addEventListener('click', canvasClear);
 
     function canvasClear(e){
         canvas = document.getElementById('mainCanvas');
         if(canvasDisabled) return;
-        if(e.key=='C' || e.key=='c'){
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
     }
 
     function setPosition(e){
@@ -96,7 +95,7 @@ window.addEventListener('load', function (){
 
 
     socket.on('game info', (gameinfo) => {
-        //console.log('game info' + JSON.stringify(gameinfo));
+        console.log('game info' + JSON.stringify(gameinfo));
         updateTimeRemaining(gameinfo['timeRemaining']);
         
         if(gameinfo.drawer == "") {

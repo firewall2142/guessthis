@@ -49,6 +49,8 @@ function startGame(){
     console.log('GAME START\n=====');
     console.log(`ITEM: ${drawItem}`);
     console.log('DRAWER:\t' + drawer + '\t' + sock2user.get(drawer));
+    clearTimeout(gameTimeout);
+    clearInterval(gameInterval);
     gameTimeout = setTimeout(endGameScreen, GAME_DURATION*1000);
     timeleft = GAME_DURATION;
     gameInterval = setInterval(updateInfo, 1000);
@@ -63,6 +65,7 @@ function endGameScreen(){
     gameActive = false;
     clearTimeout(gameTimeout);
     clearInterval(gameInterval);
+
 
     for (var i = correctGuess.length - 1; i >= 0; i--) {
         sock2points.set(correctGuess[i], sock2points.get(correctGuess[i]) + POINT_DIST[Math.min(i, POINT_DIST.length-1)]);
@@ -107,11 +110,13 @@ function endGameScreen(){
     }
 
     timeleft = 10; //end game screen time
+    gameTimeout = setTimeout(endGame, timeleft*1000)
     gameInterval = setInterval(()=> {
-            io.emit('game info', {'drawer': '', 'timeRemaining': timeleft});
             timeleft -= 1;
-        }, 1000);
-    gameTimeout = setTimeout(endGame, timeleft*1000);
+            io.emit('game info', {'drawer': '', 'timeRemaining': timeleft});
+        }, 1000);;
+    io.emit('message', `<li>The answer was ${drawItem}</li>`)
+    
 }
 
 function endGame(){
@@ -216,6 +221,7 @@ io.on('connection', (socket) => {
     socket.emit('username', username);
     sock2user.set(socket.id, username);
     setTimeout(() => {}, 1000);
+    
     if(users.length==1){
         startGame();
     }
