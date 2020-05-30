@@ -4,7 +4,7 @@ var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 var rug = require('random-username-generator');
 
-var PORT = 3000;
+var PORT = 80;
 
 var users = [];
 var DRAW_ITEMS = ["Icecream", "Sandwich", "House", "Cage", "Necklace", "Piano", "Mobile", "Headphones"];
