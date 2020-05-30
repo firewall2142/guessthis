@@ -23,7 +23,6 @@
 			background: url(/img/ttt.png) repeat 0 0;
 		}
 		form input { border: 0; padding: 10px; width: 70%; margin-right: 0.5%; display: inline-block;}
-		form button { width: 20%; background: rgb(130, 224, 255); border: none; padding: 10px; display: inline-block; vertical-align: middle;}
 		h2 h3 {
 			text-shadow: 1px 1px 1px #ccc;
 		}
@@ -38,21 +37,44 @@
 		.chatbox ul li:nth-child(odd) { background: #eee  }
 		.chatbox form input { width: 80%; }
 		.chatbox form button { align-self: right;}
-		button { width: 15%; border: none; background: darkcyan;}
+		form button { width: 15%; }
+		button { width: 15%; border: none; background: darkcyan; font-size-adjust: 0.8;}
 		.chatbox .messages { border: solid; height: 100%; overflow: scroll;}
 		.correct { color: green; }
 		.user {font-weight: bold; color: black;}
 		.special {font-style: italic; color: #444;}
 		.outlined {border: 1px solid gray;}
 		#canvas-clear {
-			vertical-align: middle;
-			height: 80%;
-			width: 20%;
+			font-size-adjust: 1;
 		}
 		#mainCanvas {
 			border: 2px solid black;
 			width: 100%;
 		}
+		button {
+			box-shadow:inset 0px 0px 15px 3px #23395e;
+			background:linear-gradient(to bottom, #2e466e 5%, #415989 100%);
+			background-color:#2e466e;
+			border-radius:17px;
+			border:1px solid #1f2f47;
+			display:inline-block;
+			cursor:pointer;
+			color:#ffffff;
+			font-family:Arial;
+			font-size:15px;
+			padding:6px 13px;
+			text-decoration:none;
+			text-shadow:0px 1px 0px #263666;
+		}
+		button:hover {
+			background:linear-gradient(to bottom, #415989 5%, #2e466e 100%);
+			background-color:#415989;
+		}
+		button:active {
+			position:relative;
+			top:1px;
+		}
+
 	</style>
 	<script src="main.js"></script>
 </head>
@@ -62,15 +84,15 @@
 	</div>
 	<div class="row">
 		<div class="col-md-6">
-			<button id="canvas-clear"><h2>Clear</h2></button>
+			<button id="canvas-clear">Clear</button>
 		</div>
 		<div class="col-sm-12 col-md-6">
-			<h2>
+			
 				<form id="username-form" action="">
 					<input style="width: 60%" id="username-input" autocomplete="off" />
-					<button style="width: 30%" id="username-btn" ><h6>Change Username<h6></button>
+					<button style="width: 30%" id="username-btn" >Change Username</button>
 				</form>
-			</h2>
+			
 		</div>
 	</div>
 	<div class="row">

@@ -67,7 +67,12 @@ window.addEventListener('load', function (){
         document.getElementById('timeleft').innerText = `Time left: ${mins}:${secs}`;
     }
     function appendChatMessage(msg){
+        let chatmessagebox = document.getElementsByClassName('messages')[0];
+        let shouldscroll = chatmessagebox.scrollTop + chatmessagebox.clientHeight === chatmessagebox.scrollHeight
         document.getElementById('message-list').innerHTML += msg;
+        if(!shouldscroll){
+            chatmessagebox.scrollTop = chatmessagebox.scrollHeight;
+        }
     }
 
     socket.on('username', (usr) => {

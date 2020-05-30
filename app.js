@@ -9,7 +9,7 @@ var PORT = 3000;
 var users = [];
 var DRAW_ITEMS = ["Icecream", "Sandwich", "House", "Cage", "Necklace", "Piano", "Mobile", "Headphones"];
 var drawer_index = 0;
-const GAME_DURATION = 10;
+const GAME_DURATION = 120;
 const POINT_DIST = [5, 3, 2, 1];
 
 
@@ -133,6 +133,11 @@ io.on('connection', (socket) => {
     var username = rug.generate();
 
     socket.on('username', (newusrname) => {
+        console.log(`${newusrname}.match(/^[a-z0-9_\-]/i) = ${newusrname.match(/^[a-z0-9_\-]/i)}`);
+        if(newusrname.length <= 2 || newusrname.match(/[^a-z0-9_\-]/i) != null) {
+            socket.emit('message', '<li><span class="special">Invalid username</span></li>')
+            return;
+        }
         if(users.includes(newusrname)) return;
         let oldusrname = sock2user.get(socket.id);
         console.log(`oldusrname = ${oldusrname} and !oldusrname = ${!oldusrname}`);
