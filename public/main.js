@@ -62,7 +62,9 @@ window.addEventListener('load', function (){
         document.getElementById('game-message').innerHTML = msg;
     }
     function updateTimeRemaining(time){
-        document.getElementById('timeleft').innerText = `${Math.floor(time/60)}:${time%60}`;
+	let mins = ('000' + Math.floor(time/60)).slice(-2);
+	let secs = ('000' + time%60).slice(-2);
+        document.getElementById('timeleft').innerText = `Time left: ${mins}:${secs}`;
     }
     function appendChatMessage(msg){
         document.getElementById('message-list').innerHTML += msg;

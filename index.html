@@ -37,12 +37,18 @@
 		.chatbox .form {padding: 10px;}
 		.chatbox ul li:nth-child(odd) { background: #eee  }
 		.chatbox form input { width: 80%; }
-		.chatbox form button { align-self: right; width: 15%; border: none; background: darkcyan;}
+		.chatbox form button { align-self: right;}
+		button { width: 15%; border: none; background: darkcyan;}
 		.chatbox .messages { border: solid; height: 100%; overflow: scroll;}
 		.correct { color: green; }
 		.user {font-weight: bold; color: black;}
 		.special {font-style: italic; color: #444;}
 		.outlined {border: 1px solid gray;}
+		#canvas-clear {
+			vertical-align: middle;
+			height: 80%;
+			width: 20%;
+		}
 		#mainCanvas {
 			border: 2px solid black;
 			width: 100%;
@@ -52,7 +58,12 @@
 </head>
 <body>
 	<div class="row">
-		<div class="col-sm-12 col-md-6"><h2>Hello, <span id="username">new User</span></h2></div>
+		<div class="col-sm-12"><h2>Hello, <span id="username">new User</span></h2></div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<button id="canvas-clear"><h2>Clear</h2></button>
+		</div>
 		<div class="col-sm-12 col-md-6">
 			<h2>
 				<form id="username-form" action="">
@@ -66,7 +77,7 @@
 		<div class="col-sm-6">
 			<h3 id="game-message">No Response</h3>
 		</div>
-		<div class="col-md-3" id="points"><h3>Points: 123</h3></div>
+		<div class="col-md-3"><h3 id="points">Points: 0</h3></div>
 		<div class="col-md-3" ><h3 id="timeleft">Time Left: 00:00</h3></div>
 	</div>
 	<div class="row">
