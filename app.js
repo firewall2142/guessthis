@@ -9,12 +9,12 @@ var PORT = 3000;
 var users = [];
 var DRAW_ITEMS = ["Icecream", "Sandwich", "House", "Cage", "Necklace", "Piano", "Mobile", "Headphones"];
 var drawer_index = 0;
-const GAME_DURATION = 120;
+const GAME_DURATION = 10;
 const POINT_DIST = [5, 3, 2, 1];
 
 
 //for testing only!!
-app.use(express.static(__dirname));
+app.use(express.static(__dirname + '/public'));
 
 
 app.get('/', (req, res, next) => {
@@ -193,17 +193,24 @@ io.on('connection', (socket) => {
             `<li><span class="correct"><span class="user">${sock2user.get(socket.id)}</span> is right!</span></li>`);
             socket.emit('message', 
             '<li><span class="correct"><span class="user yourself">YOU</span> are right!</span></li>');
+            if(correctGuess.length == users.length - 1){
+                endGameScreen();
+            }
             return;
         }
         io.emit('message', `<li>${msg}</li>`);
         
     });
 
+    socket.on('get-username', () => {
+        socket.emit('username', sock2user.get(socket.id));
+    });
+
     console.log('num of users  :\t', users.length);
     console.log('user connected:\t' + socket.id + '\t' + username);
     socket.emit('username', username);
     sock2user.set(socket.id, username);
-
+    setTimeout(() => {}, 1000);
     if(users.length==1){
         startGame();
     }

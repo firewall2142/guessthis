@@ -10,25 +10,34 @@
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 	<script src="/socket.io/socket.io.js"></script>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Indie Flower">
 	<style>
 		tr:nth-child(even) {background-color: #f2f2f2;}
-		th {background-color: #4CAF50; padding: 5px;}
+		th {background-color: gray; padding: 5px;}
 		td {padding: 5px;}
 		table {border-collapse: collapse; }
-		body { font: 16px Helvetica, Arial;}
-		form input { border: 0; padding: 10px; width: 70%; margin-right: 0.5%; }
-		form button { width: 20%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+		body {
+			margin: 5px;
+			padding: 5px;
+		    font: 16px "Indie Flower", Helvetica, Arial;
+			background: url(/img/ttt.png) repeat 0 0;
+		}
+		form input { border: 0; padding: 10px; width: 70%; margin-right: 0.5%; display: inline-block;}
+		form button { width: 20%; background: rgb(130, 224, 255); border: none; padding: 10px; display: inline-block; vertical-align: middle;}
+		h2 h3 {
+			text-shadow: 1px 1px 1px #ccc;
+		}
+		.chatbox {height: 480px; box-shadow: 0 0 1em 1em #ccc; }
 		.chatbox ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-        }
-		.chatbox {height: 480px; }
-        .chatbox ul li { padding: 5px 10px;}
+		    list-style-type: none;
+		    margin: 0;
+		    padding: 0;
+		}
+		.chatbox ul li { padding: 5px 10px;}
 		.chatbox .form {padding: 10px;}
-        .chatbox ul li:nth-child(odd) { background: #eee  }
-        .chatbox form input { width: 80%; }
-        .chatbox form button { align-self: right; width: 15%; border: none; background: darkcyan;}
+		.chatbox ul li:nth-child(odd) { background: #eee  }
+		.chatbox form input { width: 80%; }
+		.chatbox form button { align-self: right; width: 15%; border: none; background: darkcyan;}
 		.chatbox .messages { border: solid; height: 100%; overflow: scroll;}
 		.correct { color: green; }
 		.user {font-weight: bold; color: black;}
@@ -48,7 +57,7 @@
 			<h2>
 				<form id="username-form" action="">
 					<input style="width: 60%" id="username-input" autocomplete="off" />
-					<button style="width: 30%" id="username-btn" ><h4>Change<h4></button>
+					<button style="width: 30%" id="username-btn" ><h6>Change Username<h6></button>
 				</form>
 			</h2>
 		</div>
@@ -69,7 +78,7 @@
 					</ul>
 				</div>
 				<form id="chatbox-form">
-					<input type="text" id="chat-message-input" />
+					<input type="text" id="chat-message-input" autofocus/>
 					<button>Send</button>
 				</form>
 			</div>

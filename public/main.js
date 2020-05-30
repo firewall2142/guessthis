@@ -1,5 +1,4 @@
 var canvasDisabled = true;
-var lastblob;
 const socket = io();
 
 window.addEventListener('load', function (){
@@ -55,8 +54,7 @@ window.addEventListener('load', function (){
 
         ctx.stroke();
 */  
-        lastblob = canvas.toDataURL();
-        socket.emit('update canvas', lastblob);
+        socket.emit('update canvas', canvas.toDataURL());
     };
 
 
@@ -130,8 +128,15 @@ window.addEventListener('load', function (){
         console.log("Received points: " + JSON.stringify(ptsdat));
         document.getElementById('points').innerText = `Points: ${ptsdat.game}`;
         appendChatMessage(`<li><span="${(ptsdat.round > 0)?'correct':'special'}"/>You've earned ${ptsdat.round} points this round</span></li>`);
-    })
+    });
 
+    var testUser = setInterval(() => {
+        if(document.getElementById('username').innerText == 'new User'){
+            socket.emit('get-username', '');
+        } else {
+            this.clearInterval(testUser);
+        }
+    }, 500)
 
     $('#chatbox-form').submit((e) => {
         e.preventDefault();
