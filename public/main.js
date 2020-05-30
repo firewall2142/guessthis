@@ -1,5 +1,7 @@
 var canvasDisabled = true;
+var canvasCleared = false;
 const socket = io();
+var myname = null;
 
 window.addEventListener('load', function (){
     var canvas = document.getElementById('mainCanvas');
@@ -67,7 +69,8 @@ window.addEventListener('load', function (){
     }
     function appendChatMessage(msg){
         let chatmessagebox = document.getElementsByClassName('messages')[0];
-        let shouldscroll = chatmessagebox.scrollTop + chatmessagebox.clientHeight === chatmessagebox.scrollHeight
+        let shouldscroll = (chatmessagebox.scrollTop + chatmessagebox.clientHeight) > chatmessagebox.scrollHeight-10;
+        shouldscroll = false;
         document.getElementById('message-list').innerHTML += msg;
         if(!shouldscroll){
             chatmessagebox.scrollTop = chatmessagebox.scrollHeight;
@@ -77,6 +80,7 @@ window.addEventListener('load', function (){
     socket.on('username', (usr) => {
         console.log('username:' + usr);
         document.getElementById('username').innerText = usr;
+        myname = usr;
     });
 
     socket.on('game start', (gameinfo) => {
@@ -101,7 +105,7 @@ window.addEventListener('load', function (){
         if(gameinfo.drawer == "") {
             updateMessage('<span class="special">Game finished...</span>');
             canvasDisabled = true;
-        } else if(gameinfo.drawer != document.getElementById('username').innerText ) {
+        } else if(gameinfo.drawer != myname ) {
             updateMessage(gameinfo['drawer'] + ' is drawing');
             canvasDisabled = true;
         } else {
@@ -113,7 +117,10 @@ window.addEventListener('load', function (){
 
     socket.on('drawer', (item) => {
         console.log('I need to draw : ' + item);
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        if(!canvasCleared){
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            canvasCleared = true;
+        }
         updateMessage("YOU need to draw : " + item);
         canvasDisabled = false;
     });
@@ -134,6 +141,7 @@ window.addEventListener('load', function (){
         console.log("Received points: " + JSON.stringify(ptsdat));
         document.getElementById('points').innerText = `Points: ${ptsdat.game}`;
         appendChatMessage(`<li><span="${(ptsdat.round > 0)?'correct':'special'}"/>You've earned ${ptsdat.round} points this round</span></li>`);
+        canvasCleared = false;
     });
 
     var testUser = setInterval(() => {

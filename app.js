@@ -27,6 +27,7 @@ var sock2user = new Map();
 var sock2points = new Map();
 var gameTimeout;
 var gameInterval; //gameinfo interval
+var gameDrawerInterval; // for reminding the drawer, its goal
 var drawItem;
 var drawer;
 var timeleft;
@@ -54,6 +55,9 @@ function startGame(){
     gameTimeout = setTimeout(endGameScreen, GAME_DURATION*1000);
     timeleft = GAME_DURATION;
     gameInterval = setInterval(updateInfo, 1000);
+    gameDrawerInterval = setInterval(() => {
+        io.to(drawer).emit('drawer', drawItem);
+    }, 1000);
 }
 
 function updateInfo(){
