@@ -69,6 +69,7 @@ function endGameScreen(){
     gameActive = false;
     clearTimeout(gameTimeout);
     clearInterval(gameInterval);
+    clearInterval(gameDrawerInterval);
 
 
     for (var i = correctGuess.length - 1; i >= 0; i--) {
